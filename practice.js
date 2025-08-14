@@ -44,7 +44,7 @@
 // Example 5
 // const arr=['one','two','three'];
 // const str='hello';
-// const res =arr.includes('on')
+// const res =arr.includes('one')
 // console.log(res);
 // const anotherVar = arr.includes('onetwo');
 // console.log(anotherVar);
@@ -60,6 +60,7 @@
 //Example 7
 // let a =10;
 // let b = new Number(10);
+// console.log(typeof a)
 // console.log(typeof b)
 // console.log(a==b);
 // console.log(a===b)//COz it check DT & V
@@ -76,7 +77,9 @@
 // Original.addres.city = "pune";
 // console.log(shallowCopy);
 // shallowCopy.nama = "kartik";
+// shallowCopy.addres.city ="kalegaon"
 // console.log(shallowCopy);
+// console.log(Original)
 
 // Original.nama="kartik"
 // console.log(Original);
@@ -166,8 +169,8 @@
 // obj1.__proto__ = obj;
 // console.log(obj1.func1())
 // console.log(obj);
-console.log("start");
-setTimeout(() => {
-  console.log("i am treated as asychronously");
-}, 10000);
-console.log("end");
+// console.log("start");
+// setTimeout(() => {
+//   console.log("i am treated as asychronously");
+// }, 10000);
+// console.log("end");

@@ -1,0 +1,11 @@
+1.if we used find method to find a element from the array ,that particular element not present in that array, so what will be output
+=> undefind
+
+2.Between a function declaration, a function expression, and an arrow function — which ones are hoisted and can be called before their definition?
+=>
+i.Function declarations are fully hoisted — both their name and body are placed into memory during the creation phase, so they can be called before they appear in the code.
+
+ii.Function expressions and arrow functions are not fully hoisted. Only their variable name is hoisted (in TDZ if declared with let or const), but they are not initialized until the execution phase. Calling them before initialization results in a ReferenceError.
+
+"Only function declarations are fully hoisted and callable before their definition — function expressions and arrow functions are hoisted as variables but not initialized, so calling them early throws a ReferenceError."
+
