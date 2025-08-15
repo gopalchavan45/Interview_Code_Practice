@@ -1,0 +1,88 @@
+1. What is difference between package.json and package.lock.json ?
+
+2.What is difference between dependencies and Devdependencies?
+ans : 
+1. dependencies
+Purpose: Packages needed in production — your app cannot run without them.
+
+Installed: Automatically when someone runs npm install (default behavior).
+
+Examples:
+
+express (for server)
+
+react (for UI rendering)
+
+axios (for API calls)
+
+"dependencies": {
+  "express": "^4.18.2",
+  "axios": "^1.4.0"
+}
+
+2. devDependencies
+
+Purpose: Packages needed only during development — not required when running your app in production.
+
+Installed: Installed with npm install, but can be skipped with npm install --production.
+
+Examples:
+
+jest (testing)
+
+eslint (linting)
+
+webpack (bundling)
+
+vite (build tool)
+
+"devDependencies": {
+  "eslint": "^8.48.0",
+  "jest": "^29.6.0"
+}
+
+3.
+Answer
+
+In Create React App (CRA), JSX is allowed inside .js files because CRA uses Babel to compile all JavaScript in the src folder.
+Babel is configured to treat every .js file as potentially containing JSX, so there’s no distinction between .js and .jsx.
+This means JSX in .js files works without any extra configuration.
+
+In Vite, the build process uses esbuild for import analysis and transformation, which is much stricter.
+By default, esbuild parses .js files as plain JavaScript and will throw a syntax error if JSX is found.
+To make JSX work in Vite, you either:
+
+Rename the file to .jsx (recommended for clarity), or
+
+Configure Vite’s esbuild loader to treat .js files as JSX.
+
+
+4.What you can export with named exports
+
+React components (functions, classes)
+
+Variables / constants
+
+Functions
+
+Objects
+
+Arrays
+
+Classes
+
+Type definitions (in TypeScript)
+
+Basically, any valid JavaScript binding (something stored in a variable, function name, or class name) can be exported.
+
+// utils.js
+export const PI = 3.14159;
+export function add(a, b) {
+  return a + b;
+}
+export class Calculator {
+  multiply(a, b) {
+    return a * b;
+  }
+}
+export const MyComponent = () => <h1>Hello</h1>;
