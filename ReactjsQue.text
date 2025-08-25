@@ -86,3 +86,16 @@ export class Calculator {
   }
 }
 export const MyComponent = () => <h1>Hello</h1>;
+
+Q5.what is Higher order function?
+
+Ans : Definition
+
+A Higher-Order Component (HOC) is a function in React that takes a component as an input and returns a new component with extra props, logic, or behavior.
+
+Purpose : The purpose of Higher-Order Components is to reuse logic across multiple components, abstract cross-cutting concerns, and enhance components by injecting additional props or behavior without modifying the original component.
+
+Q6.What is difference between virtual dom and actual dom
+Q7.What useEffect?
+Q8.What is mounting ,unmounting?
+Q9.what are three components?
