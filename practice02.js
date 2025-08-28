@@ -38,13 +38,24 @@
 // console.log(Capitalize("Hello World"));
 
 //Ex04
-//reverse each word 
-function reverseEachWord(gopal) {
-  return gopal
-    .split(" ") // split the sentence into words
-    .map((word) => word.split("").reverse().join("")) // reverse each word
-    .join(" "); // join the words back with spaces
-}
+//reverse each word
+// function reverseEachWord(gopal) {
+//   return gopal
+//     .split(" ") // split the sentence into words
+//     .map((word) => word.split("").reverse().join("")) // reverse each word
+//     .join(" "); // join the words back with spaces
+// }
 
-console.log(reverseEachWord("Java Programming"));
-// Output: "avaJ gnimmargorP"
+// console.log(reverseEachWord("Java Programming"));
+// // Output: "avaJ gnimmargorP"
+
+//Ex04
+// function gopal() {
+//   var n = 56;
+//   return 8;
+// }
+// gopal();
+// console.log(gopal());
+// console.log(n);
+
+//Ex05
