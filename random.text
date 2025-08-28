@@ -1,4 +1,64 @@
-async
-1.async and await are the keyword in javascript
-2.asyn and await always return the promises
-3.asyn keyword which is written before the function and await keyword written in front of promises.
+Perfect 8-Point Answer on async/await
+
+async and await are keywords in JavaScript used to handle asynchronous operations more readably compared to .then() and .catch().
+
+An async function always returns a Promise. Even if you return a normal value, it is wrapped inside a resolved Promise.
+
+async is placed before a function declaration/expression. Inside that function, await is used before a Promise to pause its execution until the Promise settles (resolves or rejects).
+
+await can only be used inside an async function (except for top-level await in ES modules, supported in modern JavaScript).
+
+Behind the scenes:
+
+JavaScript is single-threaded and uses an event loop and microtask queue for async tasks.
+
+When await is encountered, the async function execution suspends and the rest of the program continues.
+
+Once the Promise resolves, the function resumes where it left off from the microtask queue without blocking the main thread.
+
+Error handling is simpler with try...catch inside async/await compared to .catch() in traditional Promises.
+
+For parallel execution: If multiple async tasks are independent, Promise.all() can be used with await to avoid unnecessary sequential waiting.
+
+const [user, posts] = await Promise.all([fetchUser(), fetchPosts()]);
+
+
+async/await is syntactic sugar over Promises — under the hood, it still uses Promises and doesn’t replace them.
+
+#CallBack
+
+Here’s the perfect 5–6 point version you can use directly in interviews:
+
+Definition: A callback is a function passed as an argument to another function, executed later when a task completes.
+
+Usage: Commonly used for asynchronous operations like API calls, reading files, event handling, etc.
+
+Benefit: Enables non-blocking code execution, improving performance.
+
+Callback Hell: Excessive nesting of callbacks creates the “pyramid of doom,” making code hard to read and maintain.
+
+Inversion of Control: We rely on external code to invoke our callbacks correctly; misuse can cause bugs.
+
+Modern Solution: Promises and async/await were introduced to address callback hell and improve flow control and error handling.
+
+
+const k = fetch(api);
+console.log(k) we get output in console,it will return a promise object in pending state because JavaScript not wait for fullfilled the promised that why its show pending state as soon as promised resolve or reject after certain time its show promised state as fullfilled,promisedresult replace undefined by respone which readstream form that we can convert into the json format as we required for that we have to use then()method on k
+
+def: promise is an object which reperesting eventual complition or failure of an asynchronous operations
+
+we are attaching the handlers to the promised object which create inside the function
+
+Promises Apis
+Promise.all([p1,p2,p3])
+the promise.all api helps to fullfilled the multiple promises parally,in that it will wait for all promise must be fullfilled then get the result otherwise no ,one another curcial point is any of the promises get rejected or fail ,it will immediatley through an error
+
+Promise.allSettled
+the promise.allSettled api which is used resolve multimple promises parally,in that we get result when all the promises fullfilled,if any promises get an error,It will not throw an error,It will take time all the promises should be settled whether is resolve or rejected after that we get result as we required according to promisedresult
+
+Promise.race([])
+in this promise api we are get result when very fisrt promised which is fullfilled or resolve whether is resolve or rejected ,it will not wait for rest of the promised settle or fullfilled
+
+Promise.any
+in this promise api we are get result when only very first success promise will get resolve,in that case if promised get fail then it will be ignore
+and another important point is if all the promises will get error or rejected then it will throw aggregateError
