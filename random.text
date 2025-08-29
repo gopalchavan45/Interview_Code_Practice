@@ -62,3 +62,51 @@ in this promise api we are get result when very fisrt promised which is fullfill
 Promise.any
 in this promise api we are get result when only very first success promise will get resolve,in that case if promised get fail then it will be ignore
 and another important point is if all the promises will get error or rejected then it will throw aggregateError
+
+this
+1.this keyword used in the gloabal space it will return if we console.log window object 
+this keyword which in gloabal space which has always value of global space
+gloabal object different for different cicumstances
+
+2.what is the value of this in gloabal space
+the gloabal object it can different based on where we runing JavaScript the code
+
+3.this keyword work differently whether we used strict mode and non strict mode
+if we used this keyword in function space ,
+the value depends on the strict mode and non strict mode and how the function is invoke and called
+'strict mode'
+function x(){
+    console.log(this)
+}
+x()without referance undefined
+window.x() with referance window object
+without using strict mode the value of this keyword is window object,with using strict mode it works differently the value of this keyword is undefined
+this inside non strict mode - this subsitiuation
+
+4.if we are writting function inside the object that function know one of the method we can say
+
+for Example :
+   const obj = {
+    a:10,
+    x:function(){
+        console.log(this);
+    }
+   }
+   obj.x()
+in this above example x is method obj object.
+what is the value of this if we calling obj.x() the value is object {a:10,x:f}
+   
+     const obj = {
+    a:10,
+    x:function(){
+        console.log(this.a);//the result in the console is 10 why because the value of this keyword is object and object have 'a' property
+    }
+   }
+   obj.x()
+
+   4.arrow function don't provide  their own this keyword binding (it return this value of the enclosing the lexical context)
+
+   5.if we used this keyword in html dom what will be the value of this keyword
+   <button onclick="alert(this)">click me</button> 
+   the value of this keyword referance of the html element
+   

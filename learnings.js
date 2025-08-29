@@ -8,24 +8,24 @@
 
 //m2
 
-const p = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("im from the promises");
-  }, 10000);
-});
-//m3
-const p2 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("im from the promises");
-  }, 5000);
-});
+// const p = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("im from the promises");
+//   }, 10000);
+// });
+// //m3
+// const p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve("im from the promises");
+//   }, 5000);
+// });
 
-// function data() {
-//   //js engine not wait for to resolve the promises
-//   p.then((ele) => console.log(ele)); //second
-//   console.log("hellow namaste javascript"); //last
-// }
-// data(); // hellow namaste javascript  im from the promises
+// // function data() {
+// //   //js engine not wait for to resolve the promises
+// //   p.then((ele) => console.log(ele)); //second
+// //   console.log("hellow namaste javascript"); //last
+// // }
+// // data(); // hellow namaste javascript  im from the promises
 
 // async function asyncData() {
 //   // js engine wait for the promised to be resolve
@@ -85,26 +85,39 @@ const p2 = new Promise((resolve, reject) => {
 //   });
 // });
 
-let cart = ["gopal", "chavan"];
-createCard(cart)
-  .then((ele) => console.log(ele))
-  .catch((err) => {
-    console.log(err.message);
-  });
-function createCard(cart) {
-  return new Promise((resolve, reject) => {
-    if (!valided(cart)) {
-      const err = new Error("this is not valid");
-      reject(err);
-    }
-    let orderId = "1234";
-    if (orderId) {
-      setTimeout(() => {
-        resolve(orderId);
-      }, 5000);
-    }
-  });
-}
-function valided(cart) {
-  return false;
-}
+// let cart = ["gopal", "chavan"];
+// createCard(cart)
+//   .then((ele) => console.log(ele))
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+// function createCard(cart) {
+//   return new Promise((resolve, reject) => {
+//     if (!valided(cart)) {
+//       const err = new Error("this is not valid");
+//       reject(err);
+//     }
+//     let orderId = "1234";
+//     if (orderId) {
+//       setTimeout(() => {
+//         resolve(orderId);
+//       }, 5000);
+//     }
+//   });
+// }
+// function valided(cart) {
+//   return false;
+// }
+
+const student = {
+  name: "Gopal",
+  x: function () {
+    console.log(this.name);
+  },
+};
+student.x();
+
+const student2 = {
+  name: "Sapna tai",
+};
+student.x.call(student2);
