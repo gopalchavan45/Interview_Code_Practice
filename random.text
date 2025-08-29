@@ -110,3 +110,65 @@ what is the value of this if we calling obj.x() the value is object {a:10,x:f}
    <button onclick="alert(this)">click me</button> 
    the value of this keyword referance of the html element
    
+
+   # call,apply,bind
+
+1.Definition:
+The call() method in JavaScript is used to borrow a function from one object and invoke it with another object as this.
+               OR   
+1. call method is used to call the function with the given this value and argument can be passed individually.
+          
+2.Syntax:
+
+func.call(thisArg, arg1, arg2, ...);
+
+thisArg → the object you want to use as this.
+
+arg1, arg2... → arguments passed individually.
+
+3.For Example
+const person1 = {
+  name: "Gopal",
+  greet: function (message) {
+    console.log(`${message}, ${this.name}`);
+  }
+};
+
+const person2 = { name: "Chavan" };
+
+// Borrow greet from person1 and use it with person2
+person1.greet.call(person2, "Hello"); 
+
+# apply
+Definition:
+apply() is just like call(), but instead of passing arguments individually, you pass them as an array.
+
+Syntax:
+
+func.apply(thisArg, [argsArray]);
+
+Example with apply()
+function greet(message, punctuation) {
+  console.log(`${message}, ${this.name}${punctuation}`);
+}
+
+const person1 = { name: "Gopal" };
+const person2 = { name: "Chavan" };
+
+// Using apply (arguments as array)
+greet.apply(person1, ["Hello", "!"]);   // Hello, Gopal!
+greet.apply(person2, ["Hi", "!!"]); 
+
+#bind
+bind method is similar to call method. It is also used to override this value, but the difference is it will not invoke the function instantly but return a function with attached this and argument which can be called later.
+
+const greetPerson1 = greet.bind(person1, "Hello");
+const greetPerson2 = greet.bind(person2, "Hi");
+
+greetPerson1(); // Hello, Gopal
+greetPerson2(); // Hi, Chavan
+
+
+1. call method is used to call the function with the given this value and argument can be passed individually.
+2. apply method is similar to call method, the only difference is that instead of passing argument individually, will pass the argument in a list/array.
+3. bind method is similar to call method. It is also used to override this value, but the difference is it will not invoke the function instantly but return a function with attached this and argument which can be called later.

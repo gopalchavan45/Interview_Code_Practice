@@ -109,15 +109,46 @@
 //   return false;
 // }
 
+// const student = {
+//   name: "Gopal",
+//   x: function () {
+//     console.log(this.name);
+//   },
+// };
+// student.x();
+
+// const student2 = {
+//   name: "Sapna tai",
+// };
+// student.x.call(student2);
+
+// const person1 = { name: "Gopal" };
+// const person2 = { name: "rajeev" };
+// const person3 = { name: "sapna" };
+
+// function greet(greeting, location) {
+//   console.log(greeting + ", " + this.name + " you are from " + location);
+// }
+
+// // greet.call(person1, "Hello"); // Hello, Gopal
+// // greet.call(person2, "Hi");
+
+// greet.call(person1, "hello", "pune");
+// greet.apply(person2,["hi","mumbai"]);
+// const go = greet.bind(person3,"namaskar","nashik")
+
 const student = {
-  name: "Gopal",
-  x: function () {
-    console.log(this.name);
+  name: "gopal",
+  printName: function (compliment) {
+    console.log(this.name + " " + compliment);
   },
 };
-student.x();
+student.printName("very clever");
 
 const student2 = {
-  name: "Sapna tai",
+  name: "sachin",
 };
-student.x.call(student2);
+student.printName.call(student2, "clever");
+student.printName.apply(student2, ["dangerous"]);
+const cal = student.printName.bind(student2, "clever");
+cal();
