@@ -59,3 +59,17 @@
 // console.log(n);
 
 //Ex05
+//create the function sum() that can return the sum of all passing arguments
+//here we used the spread operator to store rest of the value instead of using multiple local variables
+// function sum(...args) {
+//     let summ = 0; // initialize properly
+//     for (let i = 0; i < args.length; i++) {
+//         summ = summ + args[i];
+//     }
+//     return summ;
+// }
+
+// // For debugging
+// console.log(sum(100, 200, 300, 400)); // 1000
+
+// module.exports = sum;
