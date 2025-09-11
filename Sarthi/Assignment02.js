@@ -73,3 +73,12 @@
 // console.log(sum(100, 200, 300, 400)); // 1000
 
 // module.exports = sum;
+
+function isPowerOfThree(n) {
+  if (n < 1) return false;
+  while (n % 3 === 0) {
+    n = n / 3;
+  }
+  return n === 1;
+}
+console.log(isPowerOfThree(27))
