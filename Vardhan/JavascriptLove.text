@@ -77,7 +77,7 @@ the value depends on the strict mode and non strict mode and how the function is
 'strict mode'
 function x(){
     console.log(this)
-}
+} 
 x()without referance undefined
 window.x() with referance window object
 without using strict mode the value of this keyword is window object,with using strict mode it works differently the value of this keyword is undefined

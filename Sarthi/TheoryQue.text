@@ -1,0 +1,4 @@
+1.What is the difference between slice and splice method
+-> slice method which is used to extract the element from original array as we specify index such as o ,4 but in that it will not consider last one which we specify , it will give new array without changing the original array
+or
+splice also consider for to extact or delelte element but It will mute the original array as we specify index such as 0,4 here element at 4 also delete

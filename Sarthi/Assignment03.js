@@ -1,0 +1,35 @@
+// Curiosity 1
+// var a = [1, 2, 3, 4, 5];
+// function print(b,...a) {
+//   console.log(a);
+// }
+// print(1,2,3,4,5);
+
+// Curiosity 2
+// const arr = [1, 2, 4, 5, 6];
+// const arr1 = arr.map((ele) => {
+//   return (ele = 1);
+// });
+// console.log(arr1);
+
+// Curiosity 3
+// const obj = { a: 1, b: 2, c: 3, d: 4 };
+// console.log(Object.entries(obj))
+
+// Curiosity 4
+
+// const arr = [10, "q", "Gopal", 100];
+// const Num = [];
+// const str = [];
+// const ch = [];
+// arr.forEach((ele) => {
+//   if (typeof ele == "number") Num.push(ele);
+//   else if( typeof ele == "string") {
+//     if(ele.length>1)str.push(ele);
+//     else ch.push(ele)
+//   }
+
+// });
+// console.log(Num)
+// console.log(str)
+// console.log(ch)

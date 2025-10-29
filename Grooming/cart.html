@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shopping Cart — Fancy Order Popup</title>
+    <style>
+      :root {
+        --accent: #2563eb; /* blue */
+        --accent-dark: #1e40af;
+        --success: #10b981; /* green */
+        --bg: #f3f4f6;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --glass: rgba(255, 255, 255, 0.7);
+      }
+      * {
+        box-sizing: border-box;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+      }
+      body {
+        margin: 0;
+        padding: 28px;
+        background: linear-gradient(180deg, #eef2ff 0%, #f3f4f6 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        min-height: 100vh;
+      }
+      h1 {
+        margin: 0;
+        color: #0f172a;
+        letter-spacing: -0.5px;
+      }
+      .grid {
+        width: 100%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 24px;
+      }
+
+      /* Products */
+      .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .card img {
+        width: 140px;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 8px;
+      }
+      .price {
+        color: var(--success);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .add-btn {
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        padding: 9px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.12s ease, box-shadow 0.12s;
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.18);
+      }
+      .add-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 30px rgba(37, 99, 235, 0.12);
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 6px;
+      }
+
+      /* Cart */
+      .cart {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: sticky;
+        top: 28px;
+      }
+      .cart h2 {
+        margin: 0 0 4px 0;
+      }
+      .cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 360px;
+        overflow: auto;
+        padding-right: 6px;
+      }
+      .cart-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.02),
+          transparent
+        );
+      }
+      .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .qty-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+        border: 0;
+        background: var(--glass);
+        cursor: pointer;
+      }
+      .total {
+        font-weight: 800;
+        text-align: right;
+        margin-top: 8px;
+      }
+      .checkout {
+        background: linear-gradient(90deg, var(--success), #059669);
+        border: 0;
+        color: #fff;
+        padding: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* Payment tab (inside cart area) */
+      .payment-panel {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(2, 6, 23, 0.02), transparent);
+      }
+      .pay-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(15, 23, 42, 0.04);
+        cursor: pointer;
+      }
+      .pay-option input {
+        transform: scale(1.1);
+      }
+
+      /* Modal / popup */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 80;
+        backdrop-filter: blur(4px);
+      }
+      .modal {
+        width: clamp(320px, 56vw, 720px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), #fff);
+        border-radius: 14px;
+        padding: 28px;
+        box-shadow: 0 40px 80px rgba(2, 6, 23, 0.3);
+        transform: translateY(18px) scale(0.98);
+        opacity: 0;
+        transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.18, 1),
+          opacity 0.26s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+        text-align: center;
+      }
+      .overlay.show {
+        display: flex;
+      }
+      .modal.show {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      .badge {
+        display: inline-flex;
+        padding: 8px 12px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+        color: #fff;
+        border-radius: 999px;
+        font-weight: 700;
+        box-shadow: 0 8px 30px rgba(37, 99, 235, 0.18);
+      }
+      .title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #0f172a;
+      }
+      .subtitle {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .big-otp {
+        margin-top: 6px;
+        padding: 18px 22px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #ecfdf5, #f0fdfa);
+        border: 1px solid rgba(16, 185, 129, 0.18);
+        font-weight: 900;
+        color: #065f46;
+        font-size: 28px;
+        letter-spacing: 4px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+        margin-top: 6px;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        padding: 10px 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid rgba(2, 6, 23, 0.06);
+        padding: 10px 16px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .order-meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* smaller screens */
+      @media (max-width: 880px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0 8px;
+        }
+        .cart {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Shop — Fancy Checkout</h1>
+
+    <div class="grid">
+      <div>
+        <div class="products" id="products"></div>
+      </div>
+
+      <aside class="cart" aria-labelledby="cart-heading">
+        <h2 id="cart-heading">Your Cart</h2>
+        <div class="cart-items" id="cart-items">
+          <div class="small">No items — click Add on a product.</div>
+        </div>
+
+        <div class="total">Total: ₹<span id="total">0</span></div>
+
+        <button class="checkout" id="proceed-btn" onclick="openPaymentPanel()">
+          Proceed to Payment
+        </button>
+
+        <div class="payment-panel" id="payment-panel" aria-hidden="true">
+          <div style="font-weight: 700">Choose payment</div>
+          <label class="pay-option"
+            ><input type="radio" name="pay" value="COD" /> Cash on Delivery
+            (COD)</label
+          >
+          <label class="pay-option"
+            ><input type="radio" name="pay" value="UPI" /> UPI</label
+          >
+          <label class="pay-option"
+            ><input type="radio" name="pay" value="GPay" /> Google Pay</label
+          >
+          <label class="pay-option"
+            ><input type="radio" name="pay" value="PhonePe" /> PhonePe</label
+          >
+          <button
+            class="btn-primary"
+            style="margin-top: 8px"
+            onclick="placeOrder()"
+          >
+            Place Order
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Overlay modal -->
+    <div
+      class="overlay"
+      id="overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal" id="modal">
+        <div class="badge" id="modal-badge">Order Placed</div>
+        <div class="title" id="modal-title">
+          Thanks — your order is on the way!
+        </div>
+        <div class="subtitle" id="modal-sub">
+          We received your order details.
+        </div>
+
+        <div class="order-meta" id="modal-meta">
+          <!-- Order id, payment, total -->
+        </div>
+
+        <div id="otp-area" style="width: 100%; display: none">
+          <div class="big-otp" id="modal-otp">1234</div>
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              justify-content: center;
+              margin-top: 8px;
+            "
+          >
+            <button class="btn-primary" id="copy-otp">Copy OTP</button>
+            <button class="btn-ghost" id="show-instructions">
+              Show to delivery boy
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-primary" id="modal-ok">Continue Shopping</button>
+          <button class="btn-ghost" id="modal-close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Demo product data
+      const PRODUCTS = [
+        {
+          id: 1,
+          name: "Product A",
+          price: 100,
+          img: "https://via.placeholder.com/280x200?text=Product+A",
+          desc: "Nice item A",
+        },
+        {
+          id: 2,
+          name: "Product B",
+          price: 200,
+          img: "https://via.placeholder.com/280x200?text=Product+B",
+          desc: "Great item B",
+        },
+        {
+          id: 3,
+          name: "Product C",
+          price: 150,
+          img: "https://via.placeholder.com/280x200?text=Product+C",
+          desc: "Cool item C",
+        },
+      ];
+
+      // App state
+      let cart = {}; // {id: {name, price, quantity}}
+      let lastOrder = null;
+
+      // Init render products
+      const productsEl = document.getElementById("products");
+      function renderProducts() {
+        productsEl.innerHTML = PRODUCTS.map(
+          (p) => `
+        <div class="card">
+          <img src="${p.img}" alt="${escapeHtml(p.name)}">
+          <div style="font-weight:800;margin-bottom:6px">${escapeHtml(
+            p.name
+          )}</div>
+          <div class="muted">${escapeHtml(p.desc)}</div>
+          <div class="price">₹${p.price}</div>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add</button>
+        </div>`
+        ).join("");
+      }
+
+      function escapeHtml(s) {
+        return String(s).replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
+        );
+      }
+
+      // Cart UI
+      const cartItemsEl = document.getElementById("cart-items");
+      const totalEl = document.getElementById("total");
+
+      function addToCart(id) {
+        const p = PRODUCTS.find((x) => x.id === id);
+        if (!p) return;
+        if (!cart[id]) cart[id] = { name: p.name, price: p.price, quantity: 0 };
+        cart[id].quantity += 1;
+        updateCartUI();
+      }
+
+      function increaseQty(id) {
+        if (cart[id]) {
+          cart[id].quantity++;
+          updateCartUI();
+        }
+      }
+      function decreaseQty(id) {
+        if (!cart[id]) return;
+        cart[id].quantity--;
+        if (cart[id].quantity <= 0) delete cart[id];
+        updateCartUI();
+      }
+
+      function updateCartUI() {
+        const entries = Object.entries(cart);
+        if (entries.length === 0) {
+          cartItemsEl.innerHTML =
+            '<div class="small">No items — click Add on a product.</div>';
+          totalEl.textContent = "0";
+          return;
+        }
+        cartItemsEl.innerHTML = entries
+          .map(
+            ([id, item]) => `
+        <div class="cart-item" data-id="${id}">
+          <div style="flex:1;text-align:left">
+            <div style="font-weight:700">${escapeHtml(item.name)}</div>
+            <div class="small">₹${item.price} each</div>
+          </div>
+
+          <div class="qty-controls">
+            <button class="qty-btn" aria-label="Decrease" onclick="decreaseQty(${id})">−</button>
+            <div style="min-width:28px;text-align:center;font-weight:700">${
+              item.quantity
+            }</div>
+            <button class="qty-btn" aria-label="Increase" onclick="increaseQty(${id})">+</button>
+          </div>
+
+          <div style="min-width:80px;text-align:right;font-weight:700">₹${
+            item.price * item.quantity
+          }</div>
+        </div>
+      `
+          )
+          .join("");
+        const total = entries.reduce(
+          (s, [_, it]) => s + it.price * it.quantity,
+          0
+        );
+        totalEl.textContent = total;
+      }
+
+      // Payment panel open
+      function openPaymentPanel() {
+        if (Object.keys(cart).length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+        const panel = document.getElementById("payment-panel");
+        panel.style.display = "flex";
+        panel.setAttribute("aria-hidden", "false");
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      // Place order -> show modal
+      function placeOrder() {
+        const selected = document.querySelector('input[name="pay"]:checked');
+        if (!selected) {
+          alert("Please select a payment method.");
+          return;
+        }
+
+        const method = selected.value;
+        const total = Number(totalEl.textContent) || 0;
+        const orderId =
+          "ORD" +
+          Date.now().toString().slice(-6) +
+          Math.floor(Math.random() * 90 + 10);
+        let otp = null;
+
+        if (method === "COD") {
+          otp = Math.floor(1000 + Math.random() * 9000);
+        }
+
+        lastOrder = { orderId, method, total, otp, timestamp: Date.now() };
+
+        // Show modal
+        showOrderModal(lastOrder);
+      }
+
+      // Modal logic
+      const overlay = document.getElementById("overlay");
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modal-title");
+      const modalSub = document.getElementById("modal-sub");
+      const modalMeta = document.getElementById("modal-meta");
+      const otpArea = document.getElementById("otp-area");
+      const modalOtp = document.getElementById("modal-otp");
+      const copyOtpBtn = document.getElementById("copy-otp");
+      const modalOk = document.getElementById("modal-ok");
+      const modalClose = document.getElementById("modal-close");
+      const showInstructions = document.getElementById("show-instructions");
+
+      function showOrderModal(order) {
+        // Fill content
+        modalTitle.textContent =
+          order.method === "COD"
+            ? "Order placed — Collect OTP from customer"
+            : "Order placed successfully!";
+        modalSub.textContent = `Thank you. Your order ${order.orderId} is confirmed.`;
+        modalMeta.innerHTML = `<div>Order: <strong>${
+          order.orderId
+        }</strong></div>
+                             <div>Payment: <strong>${escapeHtml(
+                               order.method
+                             )}</strong></div>
+                             <div>Total: <strong>₹${
+                               order.total
+                             }</strong></div>`;
+
+        if (order.otp) {
+          otpArea.style.display = "block";
+          modalOtp.textContent = order.otp;
+        } else {
+          otpArea.style.display = "none";
+        }
+
+        // Show overlay & modal with animation
+        overlay.classList.add("show");
+        modal.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+
+        // Do not clear cart immediately; clear after user clicks continue
+        attachModalEvents();
+      }
+
+      function closeModalAndReset(clearCart = true) {
+        modal.classList.remove("show");
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+
+        // small timeout to allow transition
+        setTimeout(() => {
+          if (clearCart) {
+            cart = {};
+            updateCartUI();
+          }
+          // hide payment panel for a fresh start
+          const panel = document.getElementById("payment-panel");
+          panel.style.display = "none";
+          panel.setAttribute("aria-hidden", "true");
+        }, 300);
+      }
+
+      function attachModalEvents() {
+        // copy OTP
+        copyOtpBtn.onclick = async () => {
+          const txt = modalOtp.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(txt);
+            copyOtpBtn.textContent = "Copied!";
+            setTimeout(() => (copyOtpBtn.textContent = "Copy OTP"), 1400);
+          } catch (e) {
+            alert("OTP: " + txt);
+          }
+        };
+        showInstructions.onclick = () => {
+          alert(
+            "Give this OTP to the delivery person. Delivery person should verify it with the customer before handing over the package."
+          );
+        };
+
+        modalOk.onclick = () => closeModalAndReset(true);
+        modalClose.onclick = () => closeModalAndReset(false);
+
+        // close on overlay click (optional)
+        overlay.onclick = (e) => {
+          if (e.target === overlay) closeModalAndReset(false);
+        };
+      }
+
+      // initial render
+      renderProducts();
+      updateCartUI();
+
+      // expose some functions (for inline onclick handlers)
+      window.addToCart = addToCart;
+      window.increaseQty = increaseQty;
+      window.decreaseQty = decreaseQty;
+      window.openPaymentPanel = openPaymentPanel;
+      window.placeOrder = placeOrder;
+    </script>
+  </body>
+</html>

@@ -33,6 +33,7 @@
 
 // Ex 5
 // find max value in array
+// let arr = [2, 3, 4, 5, 6, 5, 5];
 // let output1 =arr .reduce((max,curr)=>{
 //     if(curr>max){
 //         max=curr;
@@ -78,7 +79,7 @@
 // console.log(arr[0].includes(arr[1]));
 
 // Ex 10
-// we have two function and what is the length of that function\
+//we have two function and what is the length of that function\
 // function fun1(a = 0, b, c) {}
 // function fun2(a, b = 9, c = 8) {}
 // console.log(fun1.length, fun2.length);
