@@ -33,3 +33,41 @@
 // console.log(Num)
 // console.log(str)
 // console.log(ch)
+
+// Curiosity 5
+
+// const obj1={};
+// const obj2={
+//     name:"Gopal Chavan"
+// }
+
+// const obj3={
+//     name:"Sapna chavan"
+// }
+
+// obj1[obj2]={
+//     name:"Raghau Chavan"
+// }
+
+// obj1[obj3]={
+//     name:"kiran chavan"
+// }
+
+// console.log(obj1[obj2])
+
+// Curiosity 6
+//It is example of function carrying
+// function sum(a,b){
+//     if(a && b) return a+b;
+//     return function sum(b){
+//         console.log("here maching the callar")
+//         return a+b;
+//     }
+// }
+
+// console.log(sum(1)(2))
+// console.log(sum(2,4))
+
+// Curiosity 7
+
+console.log([] === []); // this condition always return false since javascript campares object by reference not value.
