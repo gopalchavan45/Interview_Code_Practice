@@ -70,4 +70,43 @@
 
 // Curiosity 7
 
-console.log([] === []); // this condition always return false since javascript campares object by reference not value.
+// console.log([] === []); // this condition always return false since javascript campares object by reference not value.
+
+// Curiosity 8
+
+// let str = "my name is Gopal";
+// let newStr = str.split(" ").join("");
+// console.log(newStr);
+// let count = {};
+// for (let i = 0; i < newStr.length; i++) {
+//   let val = newStr[i];
+//   console.log(val);
+//   count[val] = (count[val] || 0) + 1;
+// }
+
+// console.log(count)
+
+// Curiosity 9
+
+// let str = "my name is Gopal";
+// let newStr = str.split(" ");
+// console.log(newStr);
+// let sentence = "";
+// for (let i = newStr.length - 1; i >= 0; i--) {
+//   sentence += newStr[i] + " ";
+// }
+// console.log(sentence)
+
+// Curiosity 10
+
+let obj = {
+  name: "kartik",
+  abc: {
+    name: "developer",
+  },
+};
+
+let obj2 = { ...obj }; //here we are using spread operator which create shallow copy which means only the top level element will be copid and nested object will remain as referece
+obj2.abc.name = "developer";
+obj2.name = "gopal";
+console.log(obj);
