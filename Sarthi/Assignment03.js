@@ -99,14 +99,14 @@
 
 // Curiosity 10
 
-let obj = {
-  name: "kartik",
-  abc: {
-    name: "developer",
-  },
-};
+// let obj = {
+//   name: "kartik",
+//   abc: {
+//     name: "developer",
+//   },
+// };
 
-let obj2 = { ...obj }; //here we are using spread operator which create shallow copy which means only the top level element will be copid and nested object will remain as referece
-obj2.abc.name = "developer";
-obj2.name = "gopal";
-console.log(obj);
+// let obj2 = { ...obj }; //here we are using spread operator which create shallow copy which means only the top level element will be copid and nested object will remain as referece
+// obj2.abc.name = "developer";
+// obj2.name = "gopal";
+// console.log(obj);
