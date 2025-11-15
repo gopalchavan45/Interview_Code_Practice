@@ -125,19 +125,19 @@ asyncData();
 // };
 // student.x.call(student2);
 
-// const person1 = { name: "Gopal" };
-// const person2 = { name: "rajeev" };
-// const person3 = { name: "sapna" };
+const person1 = { name: "Gopal" };
+const person2 = { name: "rajeev" };
+const person3 = { name: "sapna" };
 
-// function greet(greeting, location) {
-//   console.log(greeting + ", " + this.name + " you are from " + location);
-// }
+function greet(greeting, location) {
+  console.log(greeting + ", " + this.name + " you are from " + location);
+}
 
-// // greet.call(person1, "Hello"); // Hello, Gopal
-// // greet.call(person2, "Hi");
+// greet.call(person1, "Hello","p"); // Hello, Gopal
+// greet.call(person2, "Hi","k");
 
 // greet.call(person1, "hello", "pune");
-// greet.apply(person2,["hi","mumbai"]);
+greet.apply(person2, ["hi", "mumbai"]);
 // const go = greet.bind(person3,"namaskar","nashik")
 
 // const student = {

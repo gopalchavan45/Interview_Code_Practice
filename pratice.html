@@ -5,8 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Document</title>
+    <style>
+      body {
+        height: 1000px;
+      }
+      #navbar {
+        display: flex;
+        gap: 25px;
+        background-color: red;
+        width: 100%;
+        position: fixed;
+      }
+      #navbar a {
+        font-size: 50px;
+        text-decoration: none;
+        color: black;
+      }
+    </style>
   </head>
   <body>
-    <script src="Grooming/Varathi.js"></script>
+    <nav id="navbar">
+      <a href="home" class="link">Home</a>
+      <a href="contact" class="link">contact</a>
+      <a href="service" class="link">service</a>
+      <a href="about" class="link">about</a>
+    </nav>
+    <script>
+      let nav = document.getElementById("navbar");
+      let links = document.getElementsByClassName("link");
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 100) {
+          nav.style.backgroundColor = "pink";
+          links.forEach((element) => {
+            element.style.color = "blue";
+          });
+        } else {
+          if (window.scrollY < 100) {
+            nav.style.backgroundColor = "red";
+          }
+        }
+      });
+    </script>
   </body>
 </html>

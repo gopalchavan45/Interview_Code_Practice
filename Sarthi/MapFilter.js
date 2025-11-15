@@ -82,3 +82,15 @@ const students = [
 //     return stu;
 //   }).filter((stu) => stu.marks > 60).reduce((acc,cc)=>acc+cc.marks,0);
 //   console.log(output)
+
+var k = 10;
+function kk() {
+  var k = 9;
+  console.log(k);
+}
+{
+  var k = 9;
+  console.log(k);
+}
+console.log(k);
+kk();
